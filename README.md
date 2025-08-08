@@ -3,13 +3,13 @@
 Developed a secure, modular web application to manage and access user-uploaded images based on unique access codes. The system consists of a Flask-based gateway API, an independent image processing microservice, and a MySQL database for user validation. Designed with RESTful architecture, CORS management, and image handling, the project ensures isolated image directories per user, enabling privacy and secure download functionality. Technologies used include:
 Flask, MySQL, HTML/CSS/JS, REST APIs, Microservice Architecture, Image Upload/Download Handling, and Access Code Authentication.
 
--Developed multi-tier Flask services for secure image access
--Implemented access-code authentication and image folder isolation
--Used REST API architecture for service communication
--Designed responsive HTML/CSS frontend for user interaction
--Deployed local microservice architecture using Flask & Requests
--Handled image upload/download via HTTP endpoints
--Integrated CORS for cross-origin frontend-backend requests
+- Developed multi-tier Flask services for secure image access
+- Implemented access-code authentication and image folder isolation
+- Used REST API architecture for service communication
+- Designed responsive HTML/CSS frontend for user interaction
+- Deployed local microservice architecture using Flask & Requests
+- Handled image upload/download via HTTP endpoints
+- Integrated CORS for cross-origin frontend-backend requests
 
 ## Features
 
