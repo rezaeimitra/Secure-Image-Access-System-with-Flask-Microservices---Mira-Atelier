@@ -21,24 +21,6 @@ Flask, MySQL, HTML/CSS/JS, REST APIs, Microservice Architecture, Image Upload/Do
 -  CORS enabled for frontend/backend interaction
 -  MySQL database integration for user access control
 
----
-
-## Architecture
-
-Frontend (HTML/JS)
-│
-▼
-Gateway Service (Flask @ :5000)
-│
-├── /get-images?access_code=xxxx
-└── /upload-image (POST)
-│
-▼
-Image Service (Flask @ :5001)
-├── /upload
-├── /list-images
-└── /images/<folder>/<filename>
-
 ----- 
 
 ## Tech Stack
