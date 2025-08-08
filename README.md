@@ -32,5 +32,18 @@ Flask, MySQL, HTML/CSS/JS, REST APIs, Microservice Architecture, Image Upload/Do
 - **Requests (HTTP client between services)**
 - **Flask-CORS**
 
----
+----- 
+
+## Future Improvements
+- JWT-based authentication for admins
+- Upload history & logging
+- Deployment with Docker
+-  Mobile-friendly UI     
+
+----- 
+
+## Author
+- Mitra Rezaei
+- Email: mitra.reaei0808@gmail.com
+
 
