@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>User Panel</title>
+  <style>
+    :root {
+      --white: #fbf4dc;
+      --gold: #c5a334;
+      --black: #000000;
+      --light-color: #fcd860;
+      --box-shadow: 0 0 1rem rgba(250, 224, 136, 0.786);
+      --border: .2rem solid var(--gold);
+    }
+
+    body {
+      background-color: var(--black);
+      color: var(--white);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      text-align: center;
+      padding: 3rem 1rem;
+    }
+
+    h2 {
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+      text-shadow: 0 0 10px var(--gold);
+    }
+
+    form {
+      margin-bottom: 2rem;
+    }
+
+    input[type="text"] {
+      padding: 0.8rem 1rem;
+      border: var(--border);
+      border-radius: 0.5rem;
+      background-color: var(--white);
+      color: var(--black);
+      width: 250px;
+      margin-right: 1rem;
+    }
+
+    button {
+      padding: 0.8rem 1.5rem;
+      background-color: var(--gold);
+      color: var(--black);
+      border: none;
+      border-radius: 0.5rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+      box-shadow: var(--box-shadow);
+    }
+
+    button:hover {
+      background-color: var(--light-color);
+    }
+
+    #imageContainer {
+      margin-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    #imageContainer div {
+      margin-bottom: 2rem;
+      border: var(--border);
+      padding: 1rem;
+      width: 250px;
+      background-color: #111;
+      border-radius: 1rem;
+      box-shadow: var(--box-shadow);
+    }
+
+    #imageContainer img {
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 0.5rem;
+      border-radius: 0.5rem;
+    }
+
+    a[download] {
+      display: inline-block;
+      margin-top: 0.5rem;
+      padding: 0.4rem 1rem;
+      background-color: var(--gold);
+      color: var(--black);
+      text-decoration: none;
+      border-radius: 0.4rem;
+      font-weight: bold;
+    }
+
+    a[download]:hover {
+      background-color: var(--light-color);
+    }
+  </style>
+</head>
+<body>
+  <h2>Enter Access Code to View Images</h2>
+  <form id="accessForm">
+    <input type="text" id="accessCode" placeholder="Access Code" required />
+    <button type="submit">View Images</button>
+  </form>
+
+  <div id="imageContainer"></div>
+
+  <script>
+    document.getElementById("accessForm").addEventListener("submit", event => {
+      event.preventDefault(); 
+
+      const code = document.getElementById("accessCode").value.trim();
+      const container = document.getElementById("imageContainer");
+      container.innerHTML = "Loading...";
+
+
+      fetch(`http://127.0.0.1:5000/get-images?access_code=${encodeURIComponent(code)}`)
+        .then(response => response.json())
+        .then(data => {
+          container.innerHTML = "";
+
+          if (data.images && data.images.length > 0) {
+            data.images.forEach(img => {
+              const div = document.createElement("div");
+              const imageUrl = img.url;
+
+              div.innerHTML = `
+                <img src="${imageUrl}" alt="Image" />
+                <a href="${imageUrl}" download>Download</a>
+                <hr />
+              `;
+              container.appendChild(div);
+            });
+          } else if (data.error) {
+            container.innerHTML = `<p style="color: red;">${data.error}</p>`;
+          } else {
+            container.innerHTML = "<p>No images found.</p>";
+          }
+        })
+        .catch(err => {
+          console.error(err);
+          container.innerHTML = `<p style="color: red;">Something went wrong.</p>`;
+        });
+    });
+  </script>
+</body>
+</html>

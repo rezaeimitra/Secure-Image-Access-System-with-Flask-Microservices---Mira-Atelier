@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Upload with Notification</title>
+  <link rel="stylesheet" href="../css/upload.css">
+</head>
+<body>
+  <h2>Upload to User Gallery</h2>
+
+  <form id="uploadForm">
+    <input type="file" name="image" id="imageInput" multiple>
+    <button type="submit">Upload</button>
+  </form>
+
+  <div id="message" style="display:none;"></div>
+
+  <script>
+    function showMessage(success, text) {
+      const msgBox = document.getElementById("message");
+      msgBox.style.display = "block";
+      msgBox.style.padding = "10px";
+      msgBox.style.marginTop = "10px";
+      msgBox.innerText = text;
+      msgBox.style.color = success ? "green" : "red";
+      msgBox.style.border = success ? "1px solid green" : "1px solid red";
+      msgBox.style.backgroundColor = success ? "#e7ffe7" : "#ffe7e7";
+    }
+
+    const form = document.getElementById('uploadForm');
+
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+      const formData = new FormData(form);
+
+      fetch('/upload-to-user', {
+        method: 'POST',
+        body: formData
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.message) {
+          showMessage(true, data.message);
+          form.reset();
+        } else if (data.error) {
+          showMessage(false, data.error);
+        }
+      })
+      .catch(() => showMessage(false, "There is an error in server!"));
+    });
+  </script>
+</body>
+</html>

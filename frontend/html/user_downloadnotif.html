@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Image Download</title>
+  <link rel="stylesheet" href="../css/download.css">
+</head>
+<body>
+  <h2>Download Your Images</h2>
+
+  <form id="accessForm">
+    <input type="text" name="code" placeholder="Enter access code" required>
+    <button type="submit">View Images</button>
+  </form>
+
+  <div id="download-message" style="display:none;"></div>
+  <div id="imageList"></div>
+
+  <script>
+    function showDownloadMessage(success, text) {
+      const msgBox = document.getElementById("download-message");
+      msgBox.style.display = "block";
+      msgBox.style.padding = "10px";
+      msgBox.style.marginTop = "10px";
+      msgBox.innerText = text;
+      msgBox.style.color = success ? "green" : "red";
+      msgBox.style.border = success ? "1px solid green" : "1px solid red";
+      msgBox.style.backgroundColor = success ? "#e7ffe7" : "#ffe7e7";
+    }
+
+    document.getElementById("accessForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+
+      fetch('/user_download', {
+        method: 'POST',
+        body: formData
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.error) {
+          showDownloadMessage(false, data.error);
+        } else if (data.images && data.images.length > 0) {
+          showDownloadMessage(true, "Images loaded successfully.");
+          displayImages(data.images);
+        } else {
+          showDownloadMessage(false, "No images found.");
+        }
+      })
+      .catch(() => showDownloadMessage(false, "Server error occurred."));
+    });
+
+    function displayImages(images) {
+      const container = document.getElementById("imageList");
+      container.innerHTML = "";
+      images.forEach(img => {
+        const div = document.createElement("div");
+        div.innerHTML = `
+          <img src="${img.url}" alt="Image" width="200"><br>
+          <a href="${img.url}" download>Download</a>
+          <hr>
+        `;
+        container.appendChild(div);
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Access Panel</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background-color: #1a1a1a;
+      color: gold;
+    }
+
+    h1 {
+      margin-bottom: 2rem;
+      font-size: 3rem;
+      text-align: center;
+    }
+
+    button {
+      margin-top: 2rem;
+      padding: 1rem 2rem;
+      font-size: 1.6rem;
+      color: gold;
+      background: transparent;
+      border: 2px solid gold;
+      border-radius: 0.5rem;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: gold;
+      color: black;
+    }
+
+    .slideshow-container {
+      width: 400px;
+      height: 400px;
+      overflow: hidden;
+      border: 2px solid gold;
+      border-radius: 1rem;
+      box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+    }
+
+    .slideshow-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+    }
+
+    .slideshow-container img.active {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Welcome to Mira Atelier Gallery</h1>
+
+  <div class="slideshow-container">
+    <img src="images/gallery1.jpeg" alt="Slide 1" class="active">
+    <img src="images/gallery2.jpg" alt="Slide 2">
+    <img src="images/gallery3.jpg" alt="Slide 2">
+    <img src="images/gallery4.jpg" alt="Slide 2">
+    <img src="images/gallery5.jpg" alt="Slide 2">
+    <img src="images/gallery6.jpg" alt="Slide 2">
+    <img src="images/gallery7.jpg" alt="Slide 2">
+    <img src="images/gallery8.jpg" alt="Slide 2">
+    <img src="images/gallery9.jpg" alt="Slide 2">
+    <img src="images/gallery10.jpg" alt="Slide 2">
+    <img src="images/gallery11.jpg" alt="Slide 2">
+    <img src="images/gallery12.jpg" alt="Slide 2">
+  </div>
+
+    <button onclick="location.href='user_download.html'">My Gallery</button>
+
+
+
+  <script>
+    const slides = document.querySelectorAll('.slideshow-container img');
+    let current = 0;
+
+    function showNextSlide() {
+      slides[current].classList.remove('active');
+      current = (current + 1) % slides.length;
+      slides[current].classList.add('active');
+    }
+
+    setInterval(showNextSlide, 2000); // Change image every 3 seconds
+  </script>
+</body>
+</html>
